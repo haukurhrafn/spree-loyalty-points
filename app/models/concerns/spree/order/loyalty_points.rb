@@ -37,6 +37,7 @@ module Spree
       end
 
       def create_credit_transaction(points)
+        return if user.nil?
         user.loyalty_points_credit_transactions.create(source: self, loyalty_points: points)
       end
 
