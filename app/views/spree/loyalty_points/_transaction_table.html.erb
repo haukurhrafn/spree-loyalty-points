@@ -19,7 +19,11 @@
         <td class="loyalty-points-date"><%= pretty_time(loyalty_point_transaction.updated_at) %></td>
         <% if loyalty_point_transaction.source.present? %>
           <% transaction_source = loyalty_point_transaction.source_type.gsub('Spree::','') -%>
-          <td class="loyalty-points-source"><%= transaction_source %></td>
+		  <% if transaction_source == "Order" %>
+          	<td class="loyalty-points-source">Pöntun</td>
+		  <% else %>
+		  	<td class="loyalty-points-source"><%= transaction_source %></td>
+		  <% end %>
           <% if transaction_source == "Order" %>
             <td class="loyalty-points-source-id"><%= link_to loyalty_point_transaction.source.number, spree.order_path(loyalty_point_transaction.source) %></td>
           <% else %>
@@ -38,7 +42,7 @@
     </tbody>
   </table>
 <% else %>
-  <p><%= Spree.t(:you_have_not_earned_any_loyalty_points_yet) %></p>
+  <p>Þú átt enga punkta. Punktastaða uppfærist skömmu eftir að pöntun hefur verið afhent.</p>
 <% end %>
 
 <%= paginate @loyalty_points_transactions %>
