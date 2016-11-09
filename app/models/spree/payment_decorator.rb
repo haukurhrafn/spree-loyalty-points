@@ -22,9 +22,9 @@ Spree::Payment.class_eval do
     end
 
     def notify_paid_order
-      if all_payments_completed?
+      #if all_payments_completed?
         order.touch :paid_at
-      end
+      #end
     end
 
     def all_payments_completed?
