@@ -9,7 +9,9 @@ module Spree
         payment_method_ids = [Spree::CreditCard.find_by(id: params[:order]['existing_card']).payment_method_id]
       else
         payment_method_ids = params[:order][:payments_attributes].collect do |payment|
-          payment["payment_method_id"]
+          payment.each do |key, value|
+            value.to_i
+          end
         end
       end
 
