@@ -15,23 +15,21 @@ Spree::Payment.class_eval do
 
   private
 
-    def invalidate_old_payments
-      return if store_credit? || by_loyalty_points?
-      order.payments.with_state('checkout').where("id != ?", self.id).each do |payment|
-        payment.invalidate!
-      end unless by_loyalty_points?
-        payment.invalidate! unless payment.store_credit?
-      end
+  def invalidate_old_payments
+    return if store_credit? || by_loyalty_points?
+    order.payments.with_state('checkout').where("id != ?", self.id).each do |payment|
+      payment.invalidate! unless payment.store_credit?
     end
+  end
 
-    def notify_paid_order
-      #if all_payments_completed?
-        order.touch :paid_at
-      #end
-    end
+  def notify_paid_order
+    #if all_payments_completed?
+      order.touch :paid_at
+    #end
+  end
 
-    def all_payments_completed?
-      order.payments.state_not('invalid').all? { |payment| payment.completed? }
-    end
+  def all_payments_completed?
+    order.payments.state_not('invalid').all? { |payment| payment.completed? }
+  end
 
 end
