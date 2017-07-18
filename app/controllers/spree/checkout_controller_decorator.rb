@@ -1,6 +1,6 @@
 module Spree
   CheckoutController.class_eval do
-    before_filter :sufficient_loyalty_points, only: [:update], if: -> { params[:state] == 'payment' }
+    before_filter :sufficient_loyalty_points, only: [:update], if: -> { params[:state] == 'payment' && !params.has_key?(:apply_store_credit)}
 
     private
 
